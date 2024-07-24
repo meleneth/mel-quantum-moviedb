@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 
 [project]
-name = "mel-quantum-moviedb"
+name = "mel_quantum_moviedb"
 version = "0.0.1"
 authors = [
   { name="Meleneth", email="meleneth@gmail.com" }
@@ -17,9 +17,16 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+  "sqlalchemy"
+]
+[template.plugins.default]
+src-layout = true
 [project.urls]
 Homepage = "https://github.com/meleneth/mel-quantum-moviedb"
 Issues = "https://github.com/meleneth/mel-quantum-moviedb/issues"
 [tool.hatch.build.targets.wheel]
-packages = ["src/mel/quantum/moviedb"]
-
+packages = ["src/mel_quantum_moviedb"]
+[project.scripts]
+moviedb-import = "mel_quantum_moviedb.importer:import_files"
+moviedb-query = "mel_quantum_moviedb.query:query_data"
