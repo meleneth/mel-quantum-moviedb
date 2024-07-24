@@ -4,7 +4,7 @@ import os.path
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, Boolean, Float
 from sqlalchemy.orm import relationship
 
-from sqlalchemy.orm.session import sessionmaker
+from sqlalchemy.orm import Session
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy import create_engine
 
@@ -13,14 +13,13 @@ class MovieDB(object):
   db_existed = None
 
   @classmethod
-  def connect(cls, seriesname, echo=False):
-    db_filename = filename_safety("%s.sqlite" % (seriesname))
+  def connect(cls, sqlite_name, echo=False):
+    db_filename = "%s.sqlite" % (sqlite_name)
     cls.db_existed = os.path.exists(db_filename)
     engine = create_engine("sqlite:///%s" % db_filename, echo=echo)
     if not cls.db_existed:
       Base.metadata.create_all(engine)
-    Session.configure(bind=engine)
-    cls.session = Session()
+    cls.session = Session(engine)
   @classmethod
   def commit(cls):
     cls.session.commit()
@@ -32,7 +31,7 @@ class MovieDB(object):
 class FindOrCreateMixin(object):
   @classmethod
   def find(cls, **kwargs):
-    return ShowDB.session.query(cls).filter_by(**kwargs).first()
+    return MovieDB.session.query(cls).filter_by(**kwargs).first()
   @classmethod
   def find_or_create(cls, **kwargs):
     '''
@@ -42,12 +41,12 @@ class FindOrCreateMixin(object):
     from: http://stackoverflow.com/questions/2546207/does-sqlalchemy-have-an-equivalent-of-djangos-get-or-create
 
     '''
-    instance = ShowDB.session.query(cls).filter_by(**kwargs).first()
+    instance = MovieDB.session.query(cls).filter_by(**kwargs).first()
     if instance:
         return instance
     instance = cls(**kwargs)
-    ShowDB.session.add(instance)
-    ShowDB.commit()
+    MovieDB.session.add(instance)
+    MovieDB.commit()
     return instance
 
 Base = declarative_base(cls=FindOrCreateMixin)
