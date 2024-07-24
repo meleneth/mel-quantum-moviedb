@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+
+[project]
+name = "mel-quantum-moviedb"
+version = "0.0.1"
+authors = [
+  { name="Meleneth", email="meleneth@gmail.com" }
+]
+description = "Use SQLAlchemy to import a movie db file from Quanum Apprentice"
+readme = "README.me"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+[project.urls]
+Homepage = "https://github.com/meleneth/mel-quantum-moviedb"
+Issues = "https://github.com/meleneth/mel-quantum-moviedb/issues"
