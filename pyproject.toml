@@ -10,7 +10,7 @@ authors = [
   { name="Meleneth", email="meleneth@gmail.com" }
 ]
 description = "Use SQLAlchemy to import a movie db file from Quanum Apprentice"
-readme = "README.me"
+readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -20,3 +20,6 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/meleneth/mel-quantum-moviedb"
 Issues = "https://github.com/meleneth/mel-quantum-moviedb/issues"
+[tool.hatch.build.targets.wheel]
+packages = ["src/mel/quantum/moviedb"]
+
