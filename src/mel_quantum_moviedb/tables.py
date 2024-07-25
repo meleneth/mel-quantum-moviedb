@@ -51,17 +51,17 @@ class FindOrCreateMixin(object):
 
 Base = declarative_base(cls=FindOrCreateMixin)
 
-class Country(Base):
-  __tablename__ = "countries"
-
-  id = Column(Integer, primary_key=True)
-  name = Column(String)
+# class Country(Base):
+#   __tablename__ = "countries"
+#   id = Column(Integer, primary_key=True)
+#   name = Column(String)
 
 class Rating(Base):
   __tablename__ = "ratings"
 
-  id = Column(Integer, primary_key=True)
-  name = Column(String)
+  movie_id = Column(Integer, ForeignKey('movies.id'), primary_key=True)
+  country = Column(String, primary_key=True)
+  rating = Column(String)
 
 class Genre(Base):
   __tablename__ = "genres"
@@ -71,6 +71,11 @@ class Genre(Base):
 
 class Movie(Base):
   __tablename__ = "movies"
+
+  title = Column(String)
+  year = Column(String)
+
+  ratings = relationship("Rating")
 
   id = Column(Integer, primary_key=True)
   name = Column(String)
@@ -83,7 +88,6 @@ class Movie(Base):
   popularity = Column(Float)
   poster_path = Column(String)
   release_date = Column(String)
-  title = Column(String)
   video = Column(Boolean)
   vote_average = Column(Float)
   vote_count = Column(Integer)
@@ -103,10 +107,9 @@ class MovieGenres(Base):
   movie_id = Column(Integer, ForeignKey('movies.id'))
   genre_id = Column(Integer, ForeignKey('genres.id'))
 
-class MovieRatings(Base):
-  __tablename__ = "movie_ratings"
-
-  id = Column(Integer, primary_key=True)
-  movie_id = Column(Integer, ForeignKey('movies.id'))
-  rating_id = Column(Integer, ForeignKey('ratings.id'))
+# class MovieRatings(Base):
+#   __tablename__ = "movie_ratings"
+#   id = Column(Integer, primary_key=True)
+#   movie_id = Column(Integer, ForeignKey('movies.id'))
+#   rating_id = Column(Integer, ForeignKey('ratings.id'))
 
